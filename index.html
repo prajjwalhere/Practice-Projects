@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <style>
+        .todo-container{
+            width: 450px;
+            height: 550px;
+            border: 1px solid black;
+            border-radius: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1{
+            text-align: center;
+        }
+
+        input{
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button{
+            padding: 10px;
+            font-size: 16px;
+        }
+        ul{
+            list-style-type: none;
+            padding: 0;
+
+        }
+
+        li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+        }
+
+     
+
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h1> To-do list for today</h1>
+        <input type="text" id="todo-input" placeholder="Enter a task">
+        <button id="add-task-btn">Add Task</button>
+        <ul id="to-do-list"></ul>
+
+    </div>
+    
+    <script>
+
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const taskInput = document.getElementById('todo-input');
+        const toDoList = document.getElementById('to-do-list');
+
+        function addTask(){
+            const taskText = taskInput.value.trim();
+
+            if(taskText!==""){
+                const listItem = document.createElement('li');
+                listItem.textContent = taskText;
+
+                listItem.addEventListener('click', function(){
+                    listItem.classList.toggle('completed');
+                });
+
+                // Creating a button to delete a task
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.style.marginLeft = '20px';
+
+                deleteButton.addEventListener('click', function(){
+                    toDoList.removeChild(listItem);
+                });
+
+                listItem.appendChild(deleteButton);
+
+                toDoList.appendChild(listItem);
+
+                taskInput.value = "";
+
+            }
+
+        }
+
+        addTaskBtn.addEventListener('click', addTask);
+
+        taskInput.addEventListener('keypress', function(e){
+            if(e.key === 'Enter'){
+                addTask();
+            }
+        })
+    </script>
+</body>
+</html>
